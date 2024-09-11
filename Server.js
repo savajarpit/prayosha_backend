@@ -20,8 +20,10 @@ const app=express()
 
 // middelwares
 app.use(cors({
-  origin: 'https://stately-lokum-a68c8b.netlify.app'
+  origin: '*', // Allows requests from any origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }))
+app.options('*', cors());
 app.use(express.json())
 app.use(morgan('dev'))
 
