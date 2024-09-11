@@ -1,49 +1,42 @@
-import express from 'express';
-import dotenv from "dotenv";
-import morgan from 'morgan';
-import connectdb from './config/db.js';
-import authRoute from './routes/authRoute.js';
-import catagoryRoutes from './routes/catagoryRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import path from "path";
-import cors from 'cors';
-import { fileURLToPath } from 'url';
+import express from  'express'
+import dotenv from "dotenv"
+import morgan from 'morgan'
+import connectdb from './config/db.js'
+ import authRoute from './routes/authRoute.js'
+ import catagoryRoutes from './routes/catagoryRoutes.js'
+ import productRoutes from './routes/productRoutes.js'
 
-// Convert import.meta.url to file path
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-// Configer env
-dotenv.config();
 
-// Database config
-connectdb();
+import cors from 'cors'
+ // configer env
+dotenv.config()
 
-// Rest object
-const app = express();
+// database config
+connectdb()
 
-// Middlewares
-app.use(cors({ origin: '*' })); 
-app.use(express.json());
-app.use(morgan('dev'));
+// rest object
+const app=express()
 
-// Static files
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
+// middelwares
+app.use(cors())
+app.use(express.json())
+app.use(morgan('dev'))
 
-// Routes
-app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/category", catagoryRoutes);
-app.use("/api/v1/product", productRoutes);
-app.use("/api/v1/payment", productRoutes);
+//routes
+app.use("/api/v1/auth",authRoute)
+app.use("/api/v1/category",catagoryRoutes)
+app.use("/api/v1/product",productRoutes)
+app.use("/api/v1/payment",productRoutes)
 
-// Handle SPA
-app.use("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
-});
+// rest api
+app.get("/",(req,res)=>{
+    res.send('<h1>hello</h1>')
+})
 
-// Port
-const PORT = process.env.PORT || 8080;
+// PORT
+const PORT=process.env.PORT||8080
 
-app.listen(PORT, () => {
-  console.log(`Server running on localhost:${PORT}`);
-});
+app.listen(PORT,()=>{
+    console.log(`server running on localhost:${PORT}`)
+})
