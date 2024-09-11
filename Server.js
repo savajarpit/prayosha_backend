@@ -19,7 +19,9 @@ connectdb()
 const app=express()
 
 // middelwares
-app.use(cors())
+app.use(cors({
+  origin: 'https://stately-lokum-a68c8b.netlify.app'
+}))
 app.use(express.json())
 app.use(morgan('dev'))
 
